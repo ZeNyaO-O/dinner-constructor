@@ -19,7 +19,8 @@ public class Main {
             switch (command) {
                 case "1" -> addNewDish();
                 case "2" -> generateDishCombo();
-                case "3" -> {
+                case "3" -> getDishesByType();
+                case "4" -> {
                     return;
                 }
             }
@@ -30,7 +31,8 @@ public class Main {
         System.out.println("Выберите команду:");
         System.out.println("1 - Добавить новое блюдо");
         System.out.println("2 - Сгенерировать комбинации блюд");
-        System.out.println("3 - Выход");
+        System.out.println("3 - Показать все блюда");
+        System.out.println("4 - Выход");
     }
 
     private static void addNewDish() {
@@ -69,7 +71,19 @@ public class Main {
         for (int i = 0; i < numberOfCombos; i++) {
             System.out.println("Комбинация " + (i + 1));
             System.out.println(generatedCombos.get(i));
-            System.out.println(generatedCombos.get(i));
+        }
+    }
+
+    private static void getDishesByType() {
+        if (dc.isCatalogEmpty()) {
+            System.out.println("Пока нет добавленных блюд");
+        } else {
+            for (String typeName: dc.getDishes().keySet()) {
+                System.out.println(typeName + ":");
+                for (String dishName: dc.getDishes().get(typeName)) {
+                    System.out.println(dishName);
+                }
+            }
         }
     }
 }

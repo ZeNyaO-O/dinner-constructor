@@ -54,4 +54,11 @@ public class DinnerConstructor {
         return availableDishes.get(dishIndex);
     }
 
+    public boolean isCatalogEmpty() {
+        return dinnersByType.isEmpty();
+    }
+
+    public HashMap<String, ArrayList<String>> getDishes() {
+        return dinnersByType;
+    }
 }
