@@ -61,4 +61,20 @@ public class DinnerConstructor {
     public HashMap<String, ArrayList<String>> getDishes() {
         return dinnersByType;
     }
+
+    public String removeDish(String dishType, String dishName) {
+        if (checkType(dishType)) {
+            if (dinnersByType.get(dishType).contains(dishName)) {
+                dinnersByType.get(dishType).remove(dishName);
+                if (dinnersByType.get(dishType).isEmpty()) {
+                    dinnersByType.remove(dishType);
+                }
+                return "Блюдо удалено";
+            } else {
+                return "Блюдо не найдено";
+            }
+        } else {
+            return "Категория не найдена";
+        }
+    }
 }

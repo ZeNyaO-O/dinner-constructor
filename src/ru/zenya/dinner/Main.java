@@ -20,7 +20,8 @@ public class Main {
                 case "1" -> addNewDish();
                 case "2" -> generateDishCombo();
                 case "3" -> getDishesByType();
-                case "4" -> {
+                case "4" -> removeDishes();
+                case "0" -> {
                     return;
                 }
             }
@@ -32,7 +33,8 @@ public class Main {
         System.out.println("1 - Добавить новое блюдо");
         System.out.println("2 - Сгенерировать комбинации блюд");
         System.out.println("3 - Показать все блюда");
-        System.out.println("4 - Выход");
+        System.out.println("4 - Удалить блюдо");
+        System.out.println("0 - Выход");
     }
 
     private static void addNewDish() {
@@ -85,5 +87,14 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static void removeDishes () {
+        System.out.println("Введите тип блюда:");
+        String dishType = scanner.nextLine();
+        System.out.println("Введите название блюда:");
+        String dishName = scanner.nextLine();
+        String result = dc.removeDish(dishType, dishName);
+        System.out.println(result);
     }
 }
