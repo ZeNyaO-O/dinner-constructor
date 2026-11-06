@@ -21,6 +21,7 @@ public class Main {
                 case "2" -> generateDishCombo();
                 case "3" -> getDishesByType();
                 case "4" -> removeDishes();
+                case "5" -> renameDishes();
                 case "0" -> {
                     return;
                 }
@@ -34,6 +35,7 @@ public class Main {
         System.out.println("2 - Сгенерировать комбинации блюд");
         System.out.println("3 - Показать все блюда");
         System.out.println("4 - Удалить блюдо");
+        System.out.println("5 - Переименовать блюдо");
         System.out.println("0 - Выход");
     }
 
@@ -80,21 +82,32 @@ public class Main {
         if (dc.isCatalogEmpty()) {
             System.out.println("Пока нет добавленных блюд");
         } else {
-            for (String typeName: dc.getDishes().keySet()) {
+            for (String typeName : dc.getDishes().keySet()) {
                 System.out.println(typeName + ":");
-                for (String dishName: dc.getDishes().get(typeName)) {
+                for (String dishName : dc.getDishes().get(typeName)) {
                     System.out.println(dishName);
                 }
             }
         }
     }
 
-    private static void removeDishes () {
+    private static void removeDishes() {
         System.out.println("Введите тип блюда:");
         String dishType = scanner.nextLine();
         System.out.println("Введите название блюда:");
         String dishName = scanner.nextLine();
         String result = dc.removeDish(dishType, dishName);
+        System.out.println(result);
+    }
+
+    private static void renameDishes() {
+        System.out.println("Введите тип блюда в котором желаете изменить название:");
+        String dishType = scanner.nextLine();
+        System.out.println("Введите название блюда, которое хотите изменить:");
+        String dishName = scanner.nextLine();
+        System.out.println("Введите новое название блюда:");
+        String changeName = scanner.nextLine();
+        String result = dc.renameDish(dishType, dishName, changeName);
         System.out.println(result);
     }
 }

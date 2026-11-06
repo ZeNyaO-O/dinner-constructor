@@ -77,4 +77,26 @@ public class DinnerConstructor {
             return "Категория не найдена";
         }
     }
+
+    public String renameDish(String dishType, String dishName, String changeName) {
+        if (checkType(dishType)) {
+            int index = dinnersByType.get(dishType).indexOf(dishName);
+            if (index >= 0) {
+                if (!changeName.isEmpty()) {
+                    if (!dinnersByType.get(dishType).contains(changeName)){
+                        dinnersByType.get(dishType).set(index, changeName);
+                        return "Блюдо переименовано";
+                    } else {
+                        return "Такое блюдо уже существует";
+                    }
+                } else {
+                    return "Название не может быть пустым";
+                }
+            } else {
+                return "Блюдо не найдено";
+            }
+        } else {
+            return "Категория не найдена";
+        }
+    }
 }
