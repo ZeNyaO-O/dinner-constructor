@@ -6,8 +6,10 @@ import java.util.Random;
 
 public class DinnerConstructor {
 
-    HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>();
     Random random = new Random();
+
+    HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>();
+
 
     public boolean addNewDish(String dishType, String dishName) {
         ArrayList<String> dishesForType;

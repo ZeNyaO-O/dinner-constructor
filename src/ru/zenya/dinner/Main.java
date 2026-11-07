@@ -5,12 +5,16 @@ import java.util.Scanner;
 
 public class Main {
 
+    static DefaultMenu dm;
     static DinnerConstructor dc;
     static Scanner scanner;
 
     public static void main(String[] args) {
+        dm = new DefaultMenu();
         dc = new DinnerConstructor();
         scanner = new Scanner(System.in);
+
+        dm.fillMenu(dc);
 
         while (true) {
             printMenu();
