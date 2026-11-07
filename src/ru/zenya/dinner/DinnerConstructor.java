@@ -11,20 +11,25 @@ public class DinnerConstructor {
     HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>();
 
 
-    public boolean addNewDish(String dishType, String dishName) {
+    public String addNewDish(String dishType, String dishName) {
         ArrayList<String> dishesForType;
-        if (checkType(dishType)) {
-            dishesForType = dinnersByType.get(dishType);
-        } else {
-            dishesForType = new ArrayList<>();
-            dinnersByType.put(dishType, dishesForType);
+        if (!dishType.isBlank()) {
+            if (!dishName.isBlank()) {
+                if (checkType(dishType)) {
+                    dishesForType = dinnersByType.get(dishType);
+                } else {
+                    dishesForType = new ArrayList<>();
+                    dinnersByType.put(dishType, dishesForType);
+                }
+                if (!dishesForType.contains(dishName)) {
+                    dishesForType.add(dishName);
+                    return "Блюдо добавлено";
+                }
+                return "Такое блюдо уже существует";
+            }
+            return "Название блюда не может быть пустым";
         }
-        if (!dishesForType.contains(dishName)) {
-            dishesForType.add(dishName);
-            return true;
-        } else {
-            return false;
-        }
+        return "Категория не может быть пустой";
     }
 
     public ArrayList<ArrayList<String>> generateCombos(int comboNumber, ArrayList<String> dishTypes) {
@@ -42,7 +47,7 @@ public class DinnerConstructor {
 
     private ArrayList<String> generateCombo(ArrayList<String> dishTypes) {
         ArrayList<String> selectedDishes = new ArrayList<>();
-        for (String dishType: dishTypes) {
+        for (String dishType : dishTypes) {
             ArrayList<String> availableDishes = dinnersByType.get(dishType);
             String selectedDish = getRandomDish(availableDishes);
             selectedDishes.add(selectedDish);
@@ -65,40 +70,40 @@ public class DinnerConstructor {
     }
 
     public String removeDish(String dishType, String dishName) {
-        if (checkType(dishType)) {
-            if (dinnersByType.get(dishType).contains(dishName)) {
-                dinnersByType.get(dishType).remove(dishName);
-                if (dinnersByType.get(dishType).isEmpty()) {
-                    dinnersByType.remove(dishType);
+        if (!dishType.isBlank()) {
+            if (!dishName.isBlank()) {
+                if (checkType(dishType)) {
+                    if (dinnersByType.get(dishType).contains(dishName)) {
+                        dinnersByType.get(dishType).remove(dishName);
+                        if (dinnersByType.get(dishType).isEmpty()) {
+                            dinnersByType.remove(dishType);
+                        }
+                        return "Блюдо удалено";
+                    }
+                    return "Блюдо не найдено";
                 }
-                return "Блюдо удалено";
-            } else {
-                return "Блюдо не найдено";
+                return "Категория не найдена";
             }
-        } else {
-            return "Категория не найдена";
+            return "Название блюда не может быть пустым";
         }
+        return "Категория не может быть пустой";
     }
 
     public String renameDish(String dishType, String dishName, String changeName) {
         if (checkType(dishType)) {
             int index = dinnersByType.get(dishType).indexOf(dishName);
             if (index >= 0) {
-                if (!changeName.isEmpty()) {
-                    if (!dinnersByType.get(dishType).contains(changeName)){
+                if (!changeName.isBlank()) {
+                    if (!dinnersByType.get(dishType).contains(changeName)) {
                         dinnersByType.get(dishType).set(index, changeName);
                         return "Блюдо переименовано";
-                    } else {
-                        return "Такое блюдо уже существует";
                     }
-                } else {
-                    return "Название не может быть пустым";
+                    return "Такое блюдо уже существует";
                 }
-            } else {
-                return "Блюдо не найдено";
+                return "Название не может быть пустым";
             }
-        } else {
-            return "Категория не найдена";
+            return "Блюдо не найдено";
         }
+        return "Категория не найдена";
     }
 }
