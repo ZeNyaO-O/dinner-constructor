@@ -53,29 +53,53 @@ public class Main {
     }
 
     private static void generateDishCombo() {
+        boolean flag = true;
+        int numberOfCombos = 0;
+
         System.out.println("Начинаем конструировать обед...");
 
-        System.out.println("Введите количество наборов, которые нужно сгенерировать:");
-        int numberOfCombos = scanner.nextInt();
-        scanner.nextLine();
+        if (!dc.isCatalogEmpty()) {
 
-        System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
-        String nextItem = scanner.nextLine().strip();
-
-        ArrayList<String> selectedTypes = new ArrayList<>();
-        while (!nextItem.isEmpty()) {
-            if (dc.checkType(nextItem)) {
-                selectedTypes.add(nextItem);
-            } else {
-                System.out.println("Такой тип блюд мы еще не умеем готовить. Попробуйте что-нибудь другое!");
+            while (flag) {
+                System.out.println("Введите количество наборов, которые нужно сгенерировать:");
+                int examination = scanner.nextInt();
+                scanner.nextLine();
+                if (examination > 0) {
+                    flag = false;
+                    numberOfCombos = examination;
+                } else {
+                    System.out.println("Количество наборов должно быть больше 0");
+                }
             }
-            nextItem = scanner.nextLine().strip();
-        }
 
-        ArrayList<ArrayList<String>> generatedCombos = dc.generateCombos(numberOfCombos, selectedTypes);
-        for (int i = 0; i < numberOfCombos; i++) {
-            System.out.println("Комбинация " + (i + 1));
-            System.out.println(generatedCombos.get(i));
+            System.out.println("Вводите типы блюда, разделяя символом переноса строки (enter). Для завершения ввода введите пустую строку");
+            String nextItem = scanner.nextLine().strip();
+
+            ArrayList<String> selectedTypes = new ArrayList<>();
+            while (!nextItem.isBlank()) {
+                if (!selectedTypes.contains(nextItem)) {
+                    if (dc.checkType(nextItem)) {
+                        selectedTypes.add(nextItem);
+                    } else {
+                        System.out.println("Такой тип блюд мы еще не умеем готовить. Попробуйте что-нибудь другое!");
+                    }
+                } else {
+                    System.out.println("Такой тип блюда уже выбран");
+                }
+                nextItem = scanner.nextLine().strip();
+            }
+
+            if (!selectedTypes.isEmpty()) {
+                ArrayList<ArrayList<String>> generatedCombos = dc.generateCombos(numberOfCombos, selectedTypes);
+                for (int i = 0; i < numberOfCombos; i++) {
+                    System.out.println("Комбинация " + (i + 1));
+                    System.out.println(generatedCombos.get(i));
+                }
+            } else {
+                System.out.println("Нужно выбрать хотя бы один тип блюда");
+            }
+        } else {
+            System.out.println("Сначала добавьте блюда");
         }
     }
 
