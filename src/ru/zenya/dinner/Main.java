@@ -2,6 +2,7 @@ package ru.zenya.dinner;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class Main {
 
@@ -24,8 +25,9 @@ public class Main {
                 case "1" -> addNewDish();
                 case "2" -> generateDishCombo();
                 case "3" -> getDishesByType();
-                case "4" -> removeDishes();
+                case "4" -> handleDeleteMenu();
                 case "5" -> renameDishes();
+
                 case "0" -> {
                     return;
                 }
@@ -38,9 +40,34 @@ public class Main {
         System.out.println("1 - Добавить новое блюдо");
         System.out.println("2 - Сгенерировать комбинации блюд");
         System.out.println("3 - Показать все блюда");
-        System.out.println("4 - Удалить блюдо");
+        System.out.println("4 - Удаление блюд и категорий");
         System.out.println("5 - Переименовать блюдо");
         System.out.println("0 - Выход");
+    }
+
+    private static void printDelMenu() {
+        System.out.println("Выберите команду:");
+        System.out.println("1 - Удалить одно блюдо");
+        System.out.println("2 - Удалить категорию со всеми её блюдами");
+        System.out.println("3 - Очистить весь каталог");
+        System.out.println("0 - Вернуться в главное меню");
+    }
+
+    private static void handleDeleteMenu() {
+        while (true) {
+            printDelMenu();
+            String command = scanner.nextLine();
+
+            switch (command) {
+                case "1" -> removeDishes();
+                case "2" -> removeCategory();
+                case "3" -> clearCatalog();
+
+                case "0" -> {
+                    return;
+                }
+            }
+        }
     }
 
     private static void addNewDish() {
@@ -123,6 +150,34 @@ public class Main {
         String dishName = scanner.nextLine().strip();
         String result = dc.removeDish(dishType, dishName);
         System.out.println(result);
+    }
+
+    private static void removeCategory() {
+        System.out.println("Введите тип блюда для удаления:");
+        String dishType = scanner.nextLine().strip();
+        System.out.println("Удалить категорию со всеми её блюдами? Введите “да” для подтверждения");
+        String answer = scanner.nextLine().strip().toLowerCase();
+        if (answer.equals("да")) {
+            String result = dc.removeCategory(dishType);
+            System.out.println(result);
+        } else {
+            System.out.println("Удаление отменено");
+        }
+    }
+
+    private static void clearCatalog() {
+        if (!dc.isCatalogEmpty()) {
+            System.out.println("Вы действительно хотите удалить все типы блюд и сами блюда? Да/Нет:");
+            String answer = scanner.nextLine().strip().toLowerCase();
+            if (answer.equals("да")) {
+                dc.clearCatalog();
+                System.out.println("Удаление выполнено");
+            } else {
+                System.out.println("Удаление отменено");
+            }
+        } else {
+            System.out.println("Каталог уже пуст");
+        }
     }
 
     private static void renameDishes() {

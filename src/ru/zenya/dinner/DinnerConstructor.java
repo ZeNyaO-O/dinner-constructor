@@ -69,6 +69,8 @@ public class DinnerConstructor {
         return dinnersByType;
     }
 
+
+
     public String removeDish(String dishType, String dishName) {
         if (!dishType.isBlank()) {
             if (!dishName.isBlank()) {
@@ -87,6 +89,21 @@ public class DinnerConstructor {
             return "Название блюда не может быть пустым";
         }
         return "Категория не может быть пустой";
+    }
+
+    public  String removeCategory(String dishType) {
+        if (!dishType.isBlank()) {
+            if (checkType(dishType)) {
+                dinnersByType.remove(dishType);
+                return "Категория удалена";
+            }
+            return "Категория не найдена";
+        }
+        return "Категория не может быть пустой";
+    }
+
+    public void clearCatalog() {
+        dinnersByType.clear();
     }
 
     public String renameDish(String dishType, String dishName, String changeName) {
