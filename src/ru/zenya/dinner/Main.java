@@ -2,7 +2,6 @@ package ru.zenya.dinner;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.SortedMap;
 
 public class Main {
 
