@@ -27,6 +27,7 @@ public class Main {
                 case "3" -> getDishesByType();
                 case "4" -> handleDeleteMenu();
                 case "5" -> renameDishes();
+                case "6" -> searchDishes();
 
                 case "0" -> {
                     return;
@@ -42,6 +43,7 @@ public class Main {
         System.out.println("3 - Показать все блюда");
         System.out.println("4 - Удаление блюд и категорий");
         System.out.println("5 - Переименовать блюдо");
+        System.out.println("6 - Найти блюдо");
         System.out.println("0 - Выход");
     }
 
@@ -189,5 +191,22 @@ public class Main {
         String changeName = scanner.nextLine().strip();
         String result = dc.renameDish(dishType, dishName, changeName);
         System.out.println(result);
+    }
+
+    private static void searchDishes() {
+        System.out.println("Введите название блюда для поиска:");
+        String dishName = scanner.nextLine().strip().toLowerCase();
+        if (!dishName.isBlank()) {
+            ArrayList<String> result = dc.searchDishes(dishName);
+            if (!result.isEmpty()) {
+                for (String dish : result) {
+                    System.out.println(dish);
+                }
+            } else {
+                System.out.println("Блюда не найдены");
+            }
+        } else {
+            System.out.println("Название блюда не может быть пустым");
+        }
     }
 }

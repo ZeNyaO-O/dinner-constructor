@@ -70,7 +70,6 @@ public class DinnerConstructor {
     }
 
 
-
     public String removeDish(String dishType, String dishName) {
         if (!dishType.isBlank()) {
             if (!dishName.isBlank()) {
@@ -91,7 +90,7 @@ public class DinnerConstructor {
         return "Категория не может быть пустой";
     }
 
-    public  String removeCategory(String dishType) {
+    public String removeCategory(String dishType) {
         if (!dishType.isBlank()) {
             if (checkType(dishType)) {
                 dinnersByType.remove(dishType);
@@ -122,5 +121,19 @@ public class DinnerConstructor {
             return "Блюдо не найдено";
         }
         return "Категория не найдена";
+    }
+
+    public ArrayList<String> searchDishes(String dishName) {
+        ArrayList<String> dishesFound = new ArrayList<>();
+        if (!dishName.isBlank()) {
+            for (String type : dinnersByType.keySet()) {
+                for (String name : dinnersByType.get(type)) {
+                    if (name.toLowerCase().contains(dishName)) {
+                        dishesFound.add(type + " : " + name);
+                    }
+                }
+            }
+        }
+        return dishesFound;
     }
 }
