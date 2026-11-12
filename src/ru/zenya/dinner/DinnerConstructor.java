@@ -140,9 +140,7 @@ public class DinnerConstructor {
     public ArrayList<String> showDishes(String dishType) {
         ArrayList<String> dishesInCategory = new ArrayList<>();
         if (checkType(dishType)) {
-            for (String nameDish : dinnersByType.get(dishType)) {
-                dishesInCategory.add(nameDish);
-            }
+            dishesInCategory.addAll(dinnersByType.get(dishType));
         }
         return dishesInCategory;
     }
