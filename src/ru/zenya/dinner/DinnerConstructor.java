@@ -136,4 +136,14 @@ public class DinnerConstructor {
         }
         return dishesFound;
     }
+
+    public ArrayList<String> showDishes(String dishType) {
+        ArrayList<String> dishesInCategory = new ArrayList<>();
+        if (checkType(dishType)) {
+            for (String nameDish : dinnersByType.get(dishType)) {
+                dishesInCategory.add(nameDish);
+            }
+        }
+        return dishesInCategory;
+    }
 }
