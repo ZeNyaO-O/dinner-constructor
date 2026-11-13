@@ -23,11 +23,10 @@ public class Main {
             switch (command) {
                 case "1" -> addNewDish();
                 case "2" -> generateDishCombo();
-                case "3" -> getDishesByType();
+                case "3" -> handleBrowseCatalog();
                 case "4" -> handleDeleteMenu();
                 case "5" -> renameDishes();
                 case "6" -> searchDishes();
-                case "7" -> showDishes();
 
                 case "0" -> {
                     return;
@@ -40,11 +39,10 @@ public class Main {
         System.out.println("Выберите команду:");
         System.out.println("1 - Добавить новое блюдо");
         System.out.println("2 - Сгенерировать комбинации блюд");
-        System.out.println("3 - Показать все блюда");
+        System.out.println("3 - Просмотр каталога");
         System.out.println("4 - Удаление блюд и категорий");
         System.out.println("5 - Переименовать блюдо");
         System.out.println("6 - Найти блюдо");
-        System.out.println("7 - Показать блюда категории");
         System.out.println("0 - Выход");
     }
 
@@ -54,6 +52,31 @@ public class Main {
         System.out.println("2 - Удалить категорию со всеми её блюдами");
         System.out.println("3 - Очистить весь каталог");
         System.out.println("0 - Вернуться в главное меню");
+    }
+
+    private static void printBrowseCatalog() {
+        System.out.println("Выберите команду:");
+        System.out.println("1 - Показать все блюда");
+        System.out.println("2 - Показать блюда категории");
+        System.out.println("3 - Показать статистику");
+        System.out.println("0 - Вернуться в главное меню");
+    }
+
+    private static void handleBrowseCatalog() {
+        while (true) {
+            printBrowseCatalog();
+            String command = scanner.nextLine();
+
+            switch (command) {
+                case "1" -> getDishesByType();
+                case "2" -> showDishes();
+                case "3" -> showStatistics();
+
+                case "0" -> {
+                    return;
+                }
+            }
+        }
     }
 
     private static void handleDeleteMenu() {
@@ -211,21 +234,32 @@ public class Main {
         }
     }
 
-     private static void showDishes() {
-         System.out.println("Введите название категории:");
-         String dishType = scanner.nextLine().strip();
-         if (!dishType.isBlank()) {
-             ArrayList<String> result = dc.showDishes(dishType);
-             if (!result.isEmpty()) {
-                 System.out.println(dishType + ":");
-                 for (String dish : result) {
-                     System.out.println(dish);
-                 }
-             } else {
-                 System.out.println("Категория не найдена");
-             }
-         } else {
-             System.out.println("Название категории не может быть пустым");
-         }
-     }
+    private static void showDishes() {
+        System.out.println("Введите название категории:");
+        String dishType = scanner.nextLine().strip();
+        if (!dishType.isBlank()) {
+            ArrayList<String> result = dc.showDishes(dishType);
+            if (!result.isEmpty()) {
+                System.out.println(dishType + ":");
+                for (String dish : result) {
+                    System.out.println(dish);
+                }
+            } else {
+                System.out.println("Категория не найдена");
+            }
+        } else {
+            System.out.println("Название категории не может быть пустым");
+        }
+    }
+
+    private static void showStatistics() {
+        if (!dc.isCatalogEmpty()) {
+            ArrayList<String> result = dc.showStatistics();
+            for (String statistics : result) {
+                System.out.println(statistics);
+            }
+        } else {
+            System.out.println("Каталог пуст");
+        }
+    }
 }

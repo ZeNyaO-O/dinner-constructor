@@ -144,4 +144,22 @@ public class DinnerConstructor {
         }
         return dishesInCategory;
     }
+
+    public ArrayList<String> showStatistics() {
+        ArrayList<String> statistics = new ArrayList<>();
+        int totalDishes = 0;
+        for (String type : dinnersByType.keySet()) {
+            int totalDishesInCategory = 0;
+            for (String dish : dinnersByType.get(type)) {
+                totalDishes++;
+                totalDishesInCategory++;
+            }
+            statistics.add(type + ": " + totalDishesInCategory);
+        }
+        statistics.add(0, "Категорий: " + dinnersByType.size());
+        statistics.add(1, "Всего блюд: " + totalDishes);
+        statistics.add(2, "");
+
+        return statistics;
+    }
 }
