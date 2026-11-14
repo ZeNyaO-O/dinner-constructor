@@ -6,6 +6,8 @@ import java.util.Random;
 
 public class DinnerConstructor {
 
+    DinnerHistory dinnerHistory;
+
     Random random = new Random();
 
     HashMap<String, ArrayList<String>> dinnersByType = new HashMap<>();
@@ -36,6 +38,7 @@ public class DinnerConstructor {
         ArrayList<ArrayList<String>> combos = new ArrayList<>();
         for (int i = 1; i <= comboNumber; i++) {
             ArrayList<String> combo = generateCombo(dishTypes);
+            dinnerHistory.history.add(combo);
             combos.add(combo);
         }
         return combos;

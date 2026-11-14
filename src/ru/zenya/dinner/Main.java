@@ -7,11 +7,16 @@ public class Main {
 
     static DefaultMenu dm;
     static DinnerConstructor dc;
+    static DinnerHistory dh;
     static Scanner scanner;
 
     public static void main(String[] args) {
         dm = new DefaultMenu();
         dc = new DinnerConstructor();
+        dh = new DinnerHistory();
+        dc.dinnerHistory = dh;
+
+
         scanner = new Scanner(System.in);
 
         dm.fillMenu(dc);
@@ -22,7 +27,7 @@ public class Main {
 
             switch (command) {
                 case "1" -> addNewDish();
-                case "2" -> generateDishCombo();
+                case "2" -> handleGenerationMenu();
                 case "3" -> handleBrowseCatalog();
                 case "4" -> handleDeleteMenu();
                 case "5" -> renameDishes();
@@ -38,7 +43,7 @@ public class Main {
     private static void printMenu() {
         System.out.println("Выберите команду:");
         System.out.println("1 - Добавить новое блюдо");
-        System.out.println("2 - Сгенерировать комбинации блюд");
+        System.out.println("2 - Генерация обедов");
         System.out.println("3 - Просмотр каталога");
         System.out.println("4 - Удаление блюд и категорий");
         System.out.println("5 - Переименовать блюдо");
@@ -62,6 +67,29 @@ public class Main {
         System.out.println("0 - Вернуться в главное меню");
     }
 
+    private static void printGenerationMenu() {
+        System.out.println("1 - Сгенерировать комбинации");
+        System.out.println("2 - Показать историю генераций");
+        System.out.println("0 - Вернуться в главное меню");
+    }
+
+    private static void handleDeleteMenu() {
+        while (true) {
+            printDelMenu();
+            String command = scanner.nextLine();
+
+            switch (command) {
+                case "1" -> removeDishes();
+                case "2" -> removeCategory();
+                case "3" -> clearCatalog();
+
+                case "0" -> {
+                    return;
+                }
+            }
+        }
+    }
+
     private static void handleBrowseCatalog() {
         while (true) {
             printBrowseCatalog();
@@ -79,15 +107,14 @@ public class Main {
         }
     }
 
-    private static void handleDeleteMenu() {
+    private static void handleGenerationMenu() {
         while (true) {
-            printDelMenu();
+            printGenerationMenu();
             String command = scanner.nextLine();
 
             switch (command) {
-                case "1" -> removeDishes();
-                case "2" -> removeCategory();
-                case "3" -> clearCatalog();
+                case "1" -> generateDishCombo();
+                case "2" -> getHistory();
 
                 case "0" -> {
                     return;
@@ -260,6 +287,16 @@ public class Main {
             }
         } else {
             System.out.println("Каталог пуст");
+        }
+    }
+
+    private static void getHistory() {
+        if (!dh.getHistory().isEmpty()) {
+            for (int i = 0; i < dh.getHistory().size(); i++) {
+                System.out.println(i + 1 + ". " +  dh.getHistory().get(i));
+            }
+        } else {
+            System.out.println("История генераций пуста");
         }
     }
 }
